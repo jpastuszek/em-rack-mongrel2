@@ -58,7 +58,7 @@ module Mongrel2
   private
 
     def send_resp(uuid, conn_id, data)
-      @resp.send_string('%s %d:%s, %s' % [uuid, conn_id.size, conn_id, data])
+      @resp.send_msg('%s %d:%s, %s' % [uuid, conn_id.size, conn_id, data])
     end
 
     def build_http_response(body, status, headers)

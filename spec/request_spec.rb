@@ -26,7 +26,7 @@ describe Mongrel2::Request do
 
   it "should parse a Mongrel2 message and have all parts populated" do
     netstring = "UUID CON PATH 253:{\"PATH\":\"/\",\"user-agent\":\"curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3\",\"host\":\"localhost:6767\",\"accept\":\"*/*\",\"connection\":\"close\",\"x-forwarded-for\":\"::1\",\"METHOD\":\"GET\",\"VERSION\":\"HTTP/1.1\",\"URI\":\"/\",\"PATTERN\":\"/\"},0:,"
-    r = Mongrel2::Request.parse(netstring)
+    r = Mongrel2::Request.parse(netstring, double())
     r.should_not be_nil
     r.uuid.should eql('UUID')
     r.conn_id.should eql('CON')
