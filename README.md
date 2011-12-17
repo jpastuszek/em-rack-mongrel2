@@ -12,29 +12,29 @@ Pull requests and feature requests are very welcome!
 
 1. Clone the repository
 
-   git clone git@github.com:ichiban/em-rack-mongrel2.git
+    git clone https://github.com/ichiban/em-rack-mongrel2.git
 
 1. Run Mongrel2
 
-   cd em-rack-mongrel2/example
-   m2sh load
-   m2sh start -name main
+    cd em-rack-mongrel2/example
+    m2sh load
+    m2sh start -name main
 
 1. Run a simple sinatra example
 
-   cd sinatra
-   export RACK_MONGREL2_SEND=tcp://127.0.0.1:9996
-   export RACK_MONGREL2_RECV=tcp://127.0.0.1:9997
-   export RACK_MONGREL2_UUID=9539ED88-1B33-4D19-A9F9-283E5BF11AC7
-   rackup -s Mongrel2
+    cd sinatra
+    export RACK_MONGREL2_SEND=tcp://127.0.0.1:9996
+    export RACK_MONGREL2_RECV=tcp://127.0.0.1:9997
+    export RACK_MONGREL2_UUID=9539ED88-1B33-4D19-A9F9-283E5BF11AC7
+    rackup -s Mongrel2
 
 1. Run an async sinatra example
 
-   cd async_sinatra
-   export RACK_MONGREL2_SEND=tcp://127.0.0.1:9998
-   export RACK_MONGREL2_RECV=tcp://127.0.0.1:9999
-   export RACK_MONGREL2_UUID=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F
-   rackup -s Mongrel2
+    cd async_sinatra
+    export RACK_MONGREL2_SEND=tcp://127.0.0.1:9998
+    export RACK_MONGREL2_RECV=tcp://127.0.0.1:9999
+    export RACK_MONGREL2_UUID=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F
+    rackup -s Mongrel2
 
 ## How to use in your projects (work in progress)
 
@@ -48,10 +48,10 @@ Pull requests and feature requests are very welcome!
 1. Run Mongrel2
 1. Run your rack application
 
-   export RACK_MONGREL2_SEND=<mongrel2 handler recv_spec value>
-   export RACK_MONGREL2_RECV=<mongrel2 handler send_spec value>
-   export RACK_MONGREL2_UUID=<mongrel2 handler send_ident value>
-   rackup -s Mongrel2
+    export RACK_MONGREL2_SEND=<mongrel2 handler recv_spec value>
+    export RACK_MONGREL2_RECV=<mongrel2 handler send_spec value>
+    export RACK_MONGREL2_UUID=<mongrel2 handler send_ident value>
+    rackup -s Mongrel2
 
 ## Note on Patches/Pull Requests
 
