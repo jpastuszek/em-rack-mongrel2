@@ -10,17 +10,17 @@ Pull requests and feature requests are very welcome!
 
 ## How to run examples
 
-1. Clone the repository
+Clone the repository.
 
     git clone https://github.com/ichiban/em-rack-mongrel2.git
 
-1. Run Mongrel2
+Run Mongrel2.
 
     cd em-rack-mongrel2/example
     m2sh load
     m2sh start -name main
 
-1. Run a simple sinatra example
+Run a simple sinatra example or
 
     cd sinatra
     export RACK_MONGREL2_SEND=tcp://127.0.0.1:9996
@@ -28,7 +28,7 @@ Pull requests and feature requests are very welcome!
     export RACK_MONGREL2_UUID=9539ED88-1B33-4D19-A9F9-283E5BF11AC7
     rackup -s Mongrel2
 
-1. Run an async sinatra example
+Run an async sinatra example.
 
     cd async_sinatra
     export RACK_MONGREL2_SEND=tcp://127.0.0.1:9998
@@ -40,18 +40,10 @@ Pull requests and feature requests are very welcome!
 
 1. Get mongrel2 installed (http://mongrel2.org/wiki/quick_start.html)
 1. Get your config for mongrel2 setup (see example directory)
-1. Add it to your Gemfile
-
-    gem 'em-rack-mongrel2', '~> 0.0.0' # This is not available yet.
-
+1. Add it to your Gemfile (gem 'em-rack-mongrel2', '~> 0.0.0' # This is not available yet.)
 1. You also need some sort of JSON parsing library installed, like Yajl or JSON (gem i yajl-ruby or gem i json). json-jruby will work too
 1. Run Mongrel2
 1. Run your rack application
-
-    export RACK_MONGREL2_SEND=<mongrel2 handler recv_spec value>
-    export RACK_MONGREL2_RECV=<mongrel2 handler send_spec value>
-    export RACK_MONGREL2_UUID=<mongrel2 handler send_ident value>
-    rackup -s Mongrel2
 
 ## Note on Patches/Pull Requests
 
