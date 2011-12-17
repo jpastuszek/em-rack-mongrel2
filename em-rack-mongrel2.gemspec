@@ -12,22 +12,22 @@ Gem::Specification.new do |s|
   ## Leave these as is they will be modified for you by the rake gemspec task.
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
-  s.name              = 'rack-mongrel2'
-  s.version           = '0.2.4'
-  s.date              = '2011-08-23'
-  s.rubyforge_project = 'rack-mongrel2'
+  s.name              = 'em-rack-mongrel2'
+  s.version           = '0.0.0'
+  s.date              = '2011-12-17'
+  s.rubyforge_project = 'em-rack-mongrel2'
 
   ## Make sure your summary is short. The description may be as long
   ## as you like.
-  s.summary     = %Q{The only Mongrel2 Rack handler you'll ever need.}
-  s.description = %Q{A Rack handler for the Mongrel2 web server, by Zed Shaw. http://mongrel2.org/}
+  s.summary     = %Q{A Mongrel2 Rack handler with EventMachine.}
+  s.description = %Q{A Rack handler for the Mongrel2 web server with EventMachine support, by Zed Shaw. http://mongrel2.org/}
 
   ## List the primary authors. If there are a bunch of authors, it's probably
   ## better to set the email to an email list or something. If you don't have
   ## a custom homepage, consider using your GitHub URL or the like.
-  s.authors  = ['Daniel Huckstep']
-  s.email    = 'darkhelmet@darkhelmetlive.com'
-  s.homepage = 'http://github.com/darkhelmet/rack-mongrel2'
+  s.authors  = ['ICHIBANGASE, Yutaka']
+  s.email    = 'yichiban@gmail.com'
+  s.homepage = 'http://github.com/ichiban/em-rack-mongrel2'
 
   ## This gets added to the $LOAD_PATH so that 'lib/NAME.rb' can be required as
   ## require 'NAME.rb' or'/lib/NAME/file.rb' can be as require 'NAME/file.rb'
@@ -58,11 +58,14 @@ Gem::Specification.new do |s|
     LICENSE
     README.md
     Rakefile
+    em-rack-mongrel2.gemspec
+    example/.gitignore
+    example/async_sinatra/app.rb
+    example/async_sinatra/config.ru
     example/mongrel2.conf
     example/sinatra/.gitignore
     example/sinatra/app.rb
     example/sinatra/config.ru
-    example/sinatra/mongrel2.conf
     lib/mongrel2.rb
     lib/mongrel2/connection.rb
     lib/mongrel2/request.rb
