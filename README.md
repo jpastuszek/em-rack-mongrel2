@@ -42,11 +42,11 @@ Run an async sinatra example.
     export RACK_MONGREL2_UUID=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F
     rackup -s Mongrel2
 
-## How to use in your projects (work in progress)
+## How to use in your projects
 
 1. Get mongrel2 installed (http://mongrel2.org/wiki/quick_start.html)
 1. Get your config for mongrel2 setup (see example directory)
-1. Add it to your Gemfile (gem 'em-rack-mongrel2', '~> 0.0.0' # This is not available yet.)
+1. Add it to your Gemfile (gem 'em-rack-mongrel2', '~> 0.1.0')
 1. You also need some sort of JSON parsing library installed, like Yajl or JSON (gem i yajl-ruby or gem i json). json-jruby will work too
 1. Run Mongrel2
 1. Run your rack application
