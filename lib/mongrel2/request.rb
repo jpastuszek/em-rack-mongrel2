@@ -1,4 +1,6 @@
 require 'mongrel2'
+require 'rack'
+require 'eventmachine'
 
 module Mongrel2
   class Request
