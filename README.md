@@ -5,7 +5,7 @@ This is a Mongrel2 Rack handler that supports EventMachine and async response.
 I folked this from darkhelmet's rack-mongrel2 so that I can rack up async_sinatra apps.
 Tested on async_sinatra but will be able to run any Rack apps that requires an async web server such as Thin.
 
-This is my very first contribute to Ruby ecosystem. Let me know if I've done wrong.
+This is my very first contribution to Ruby ecosystem. Let me know if I've done wrong.
 Pull requests and feature requests are very welcome!
 
 ## How to run examples
@@ -14,9 +14,15 @@ Clone the repository.
 
     git clone https://github.com/ichiban/em-rack-mongrel2.git
 
+Download all dependencies.
+
+    cd em-rack-mongrel2
+    bundle install
+
 Run Mongrel2.
 
-    cd em-rack-mongrel2/example
+    cd example
+    mkdir -p tmp/pids logs
     m2sh load
     m2sh start -name main
 
