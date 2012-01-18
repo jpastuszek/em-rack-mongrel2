@@ -46,8 +46,9 @@ module Mongrel2
     end
 
     def env
+      return @env if @env
       script_name = ENV['RACK_RELATIVE_URL_ROOT'] || headers['PATTERN'].split('(', 2).first.gsub(/\/$/, '')
-      env = {
+      @env = {
         'rack.version' => Rack::VERSION,
         'rack.url_scheme' => 'http', # Only HTTP for now
         'rack.input' => body,
@@ -57,7 +58,6 @@ module Mongrel2
         'rack.run_once' => false,
         'mongrel2.pattern' => headers['PATTERN'],
         'REQUEST_METHOD' => headers['METHOD'],
-        'CONTENT_TYPE' => headers['content-type'],
         'SCRIPT_NAME' => script_name,
         'PATH_INFO' => headers['PATH'].gsub(script_name, ''),
         'QUERY_STRING' => headers['QUERY'] || '',
@@ -67,15 +67,16 @@ module Mongrel2
         'async.close' => EM::DefaultDeferrable.new
       }
       
-      env['SERVER_NAME'], env['SERVER_PORT'] = headers['host'].split(':', 2)
+      @env['SERVER_NAME'], @env['SERVER_PORT'] = headers['host'].split(':', 2)
       headers.each do |key, val|
-        unless key =~ /content_(type|length)/i
-          key = "HTTP_#{key.upcase.gsub('-', '_')}"
+        key = key.upcase.gsub('-', '_')
+        unless %w[CONTENT_TYPE CONTENT_LENGTH].include?(key)
+          key = "HTTP_#{key}"
         end
-        env[key] = val
+        @env[key] = val
       end
 
-      env
+      @env
     end
   end
 end
