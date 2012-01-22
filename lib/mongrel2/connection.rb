@@ -4,15 +4,15 @@ require 'mongrel2/response'
 
 module Mongrel2
   class Connection
-    attr_reader :received
+    attr_reader :chroot
     @context = nil
 
     def self.context
-      @context ||= EM::ZeroMQ::Context.new(1)
+       @context ||= EM::ZeroMQ::Context.new(1)
     end
 
-    def initialize(uuid, sub, pub, app)
-      @uuid, @sub, @pub, @app = uuid, sub, pub, app
+    def initialize(uuid, sub, pub, chroot, app)
+      @uuid, @sub, @pub, @chroot, @app = uuid, sub, pub, chroot, app
 
       # Connect to receive requests
       @reqs = self.class.context.connect(ZMQ::PULL, sub, self)

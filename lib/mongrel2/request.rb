@@ -13,7 +13,7 @@ module Mongrel2
         headers, rest = parse_netstring(rest)
         headers = Mongrel2::JSON.parse(headers)
         if (body_path = headers['x-mongrel2-upload-done'])
-          body = File.open(body_path)
+          body = File.open(File.join(connection.chroot, body_path))
         else
           body, _ = parse_netstring(rest)
           body = StringIO.new(body)

@@ -10,7 +10,8 @@ module Rack
           options = {
             :recv => ENV['RACK_MONGREL2_RECV'] || 'tcp://127.0.0.1:9997',
             :send => ENV['RACK_MONGREL2_SEND'] || 'tcp://127.0.0.1:9996',
-            :uuid => ENV['RACK_MONGREL2_UUID']
+            :uuid => ENV['RACK_MONGREL2_UUID'],
+            :chroot => ENV['RACK_MONGREL2_CHROOT'] || '.'
           }.merge(options)
 
           raise ArgumentError.new('Must specify an :uuid or set RACK_MONGREL2_UUID') if options[:uuid].nil?
@@ -18,7 +19,7 @@ module Rack
           conn = nil
 
           EM.run do
-            conn = ::Mongrel2::Connection.new(options[:uuid], options[:recv], options[:send], app)
+            conn = ::Mongrel2::Connection.new(options[:uuid], options[:recv], options[:send], options[:chroot], app)
             
             # This doesn't work at all until zmq fixes their shit (in 2.1.x I think), but trap it now anyway.
             %w(INT TERM KILL).each do |sig|
