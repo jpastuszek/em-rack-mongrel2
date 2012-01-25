@@ -55,4 +55,15 @@ describe Mongrel2::Request do
     env['async.callback'].call(response)
     env['async.close'].should_not be_nil
   end
+
+  it "should open an async uploaded file for body" do
+    netstring = "UUID CON PATH 296:{\"PATH\":\"/\",\"user-agent\":\"curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3\",\"host\":\"localhost:6767\",\"accept\":\"*/*\",\"connection\":\"close\",\"x-forwarded-for\":\"::1\",\"METHOD\":\"GET\",\"VERSION\":\"HTTP/1.1\",\"URI\":\"/\",\"PATTERN\":\"/\",\"x-mongrel2-upload-done\":\"tmp/upload.file\"},0:,"
+    response = double("response")
+    connection = double("connection")
+    connection.stub(:chroot).and_return('.')
+    io = double('io')
+    File.should_receive(:open).with('./tmp/upload.file').and_return(io)
+    r = Mongrel2::Request.parse(netstring, connection)
+    r.body.should eql(io)
+  end
 end
