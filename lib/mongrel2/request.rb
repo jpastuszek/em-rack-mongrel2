@@ -11,7 +11,7 @@ module Mongrel2
         # UUID CONN_ID PATH SIZE:HEADERS,SIZE:BODY,
         uuid, conn_id, path, rest = msg.split(' ', 4)
         headers, rest = parse_netstring(rest)
-        headers = Mongrel2::JSON.parse(headers)
+        headers = MultiJson.decode(headers)
         if (body_path = headers['x-mongrel2-upload-done'])
           body = File.open(File.join(connection.chroot, body_path))
         else
@@ -33,7 +33,7 @@ module Mongrel2
 
     def initialize(uuid, conn_id, path, headers, body, connection)
       @uuid, @conn_id, @path, @headers, @body = uuid, conn_id, path, headers, body
-      @data = headers['METHOD'] == 'JSON' ? Mongrel2::JSON.parse(body.read) : {}
+      @data = headers['METHOD'] == 'JSON' ? MultiJson.decode(body) : {}
       @connection = connection
     end
 
