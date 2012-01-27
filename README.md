@@ -22,25 +22,34 @@ Download all dependencies.
 Run Mongrel2.
 
     cd example
-    mkdir -p tmp/pids logs
+    mkdir -p tmp/pids logs run
     m2sh load
-    m2sh start -name main
+    sudo m2sh start -name main
 
-Run a simple sinatra example or
+Run a simple sinatra example,
 
     cd sinatra
     export RACK_MONGREL2_SEND=tcp://127.0.0.1:9996
     export RACK_MONGREL2_RECV=tcp://127.0.0.1:9997
     export RACK_MONGREL2_UUID=9539ED88-1B33-4D19-A9F9-283E5BF11AC7
-    rackup -s Mongrel2
+    rackup -s mongrel2
 
-Run an async sinatra example.
+run an async sinatra example or
 
     cd async_sinatra
     export RACK_MONGREL2_SEND=tcp://127.0.0.1:9998
     export RACK_MONGREL2_RECV=tcp://127.0.0.1:9999
     export RACK_MONGREL2_UUID=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F
-    rackup -s Mongrel2
+    rackup -s mongrel2
+
+run an big-upload example
+
+    cd upload
+    export RACK_MONGREL2_CHROOT=..
+    export RACK_MONGREL2_SEND=tcp://127.0.0.1:10000
+    export RACK_MONGREL2_RECV=tcp://127.0.0.1:10001
+    export RACK_MONGREL2_UUID=51226E47-AE49-4BC8-A9C6-BD7F6827E8A4
+    rackup -s mongrel2
 
 ## How to use in your projects
 
