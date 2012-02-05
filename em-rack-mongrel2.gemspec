@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency('ffi', ['~> 1.0.0'])
   s.add_dependency('em-zeromq', ['~> 0.2.2'])
   s.add_dependency('multi_json', ['~> 1.0.3'])
+  s.add_dependency('tnetstring', ['~> 0.3.4'])
 
   ## List your development dependencies here. Development dependencies are
   ## those that are only needed during development

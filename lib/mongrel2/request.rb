@@ -10,24 +10,15 @@ module Mongrel2
       def parse(msg, connection)
         # UUID CONN_ID PATH SIZE:HEADERS,SIZE:BODY,
         uuid, conn_id, path, rest = msg.split(' ', 4)
-        headers, rest = parse_netstring(rest)
+        headers, rest = TNetstring.parse(rest)
         headers = MultiJson.decode(headers)
         if (body_path = headers['x-mongrel2-upload-done'])
           body = File.open(File.join(connection.chroot, body_path))
         else
-          body, _ = parse_netstring(rest)
+          body, _ = TNetstring.parse(rest)
           body = StringIO.new(body)
         end
         new(uuid, conn_id, path, headers, body, connection)
-      end
-
-      def parse_netstring(ns)
-        # SIZE:HEADERS,
-
-        len, rest = ns.split(':', 2)
-        len = len.to_i
-        raise "Netstring did not end in ','" unless rest[len].chr == ','
-        [rest[0, len], rest[(len + 1)..-1]]
       end
     end
 
