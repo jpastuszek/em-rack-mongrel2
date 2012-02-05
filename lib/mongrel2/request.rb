@@ -12,18 +12,18 @@ module Mongrel2
         uuid, conn_id, path, rest = msg.split(' ', 4)
         headers, rest = TNetstring.parse(rest)
         headers = MultiJson.decode(headers)
-        body, _ = TNetstring.parse(rest)
+        if (body_path = headers['x-mongrel2-upload-done'])
+          body = File.open(File.join(connection.chroot, body_path))
+        else
+          body, _ = TNetstring.parse(rest)
+          body = StringIO.new(body)
+        end
         new(uuid, conn_id, path, headers, body, connection)
       end
     end
 
     def initialize(uuid, conn_id, path, headers, body, connection)
-      @uuid, @conn_id, @path, @headers = uuid, conn_id, path, headers
-      if (body_path = headers['x-mongrel2-upload-done'])
-        @body = File.open(File.join(connection.chroot, body_path))
-      else
-        @body = StringIO.new(body)
-      end
+      @uuid, @conn_id, @path, @headers, @body = uuid, conn_id, path, headers, body
       @data = headers['METHOD'] == 'JSON' ? MultiJson.decode(body) : {}
       @connection = connection
     end

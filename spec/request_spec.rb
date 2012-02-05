@@ -20,27 +20,17 @@ describe Mongrel2::Request do
       'URI' => '/',
       'PATTERN' => '/'
     }
-    body = ''
+    body = double('body')
+    StringIO.should_receive(:new).with('').and_return(body)
     request = double('request')
     Mongrel2::Request.should_receive(:new).with(uuid, conn_id, path, headers, body, connection).and_return(request)
     r = Mongrel2::Request.parse(message, connection)
     r.should eql(request)
   end
 
-  it "should have all parts populated" do
-    headers = {
-      "PATH" => "/",
-      "user-agent" => "curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3",
-      "host" => "localhost:6767",
-      "accept" => "*/*",
-      "connection" => "close",
-      "x-forwarded-for" => "::1",
-      "METHOD" => "GET",
-      "VERSION" => "HTTP/1.1",
-      "URI" => "/",
-      "PATTERN" => "/"
-    }
-    r = Mongrel2::Request.new('UUID', 'CON', 'PATH', headers, '', double())
+  it "should parse a Mongrel2 message and have all parts populated" do
+    message = "UUID CON PATH 253:{\"PATH\":\"/\",\"user-agent\":\"curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3\",\"host\":\"localhost:6767\",\"accept\":\"*/*\",\"connection\":\"close\",\"x-forwarded-for\":\"::1\",\"METHOD\":\"GET\",\"VERSION\":\"HTTP/1.1\",\"URI\":\"/\",\"PATTERN\":\"/\"},0:,"
+    r = Mongrel2::Request.parse(message, double())
     r.should_not be_nil
     r.uuid.should eql('UUID')
     r.conn_id.should eql('CON')
@@ -60,25 +50,10 @@ describe Mongrel2::Request do
   end
 
   it "should return rack env with async callbacks" do
+    message = "UUID CON PATH 253:{\"PATH\":\"/\",\"user-agent\":\"curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3\",\"host\":\"localhost:6767\",\"accept\":\"*/*\",\"connection\":\"close\",\"x-forwarded-for\":\"::1\",\"METHOD\":\"GET\",\"VERSION\":\"HTTP/1.1\",\"URI\":\"/\",\"PATTERN\":\"/\"},0:,"
     response = double("response")
-    uuid = double('uuid')
-    conn_id = double('conn_id')
-    path = double('path')
-    headers = {
-      "PATH" => "/",
-      "user-agent" => "curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3",
-      "host" => "localhost:6767",
-      "accept" => "*/*",
-      "connection" => "close",
-      "x-forwarded-for" => "::1",
-      "METHOD" => "GET",
-      "VERSION" => "HTTP/1.1",
-      "URI" => "/",
-      "PATTERN" => "/"
-    }
-    body = double('body')
     connection = double("connection")
-    r = Mongrel2::Request.new(uuid, conn_id, path, headers, body, connection)
+    r = Mongrel2::Request.parse(message, connection)
     connection.should_receive(:post_process).with(response, r)
     env = r.env
     env['async.callback'].call(response)
@@ -86,29 +61,13 @@ describe Mongrel2::Request do
   end
 
   it "should open an async uploaded file for body" do
+    message = "UUID CON PATH 296:{\"PATH\":\"/\",\"user-agent\":\"curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3\",\"host\":\"localhost:6767\",\"accept\":\"*/*\",\"connection\":\"close\",\"x-forwarded-for\":\"::1\",\"METHOD\":\"GET\",\"VERSION\":\"HTTP/1.1\",\"URI\":\"/\",\"PATTERN\":\"/\",\"x-mongrel2-upload-done\":\"tmp/upload.file\"},0:,"
     response = double("response")
-    uuid = double('uuid')
-    conn_id = double('conn_id')
-    path = double('path')
-    headers = {
-      "PATH" => "/",
-      "user-agent" => "curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3",
-      "host" => "localhost:6767",
-      "accept" => "*/*",
-      "connection" => "close",
-      "x-forwarded-for" => "::1",
-      "METHOD" => "GET",
-      "VERSION" => "HTTP/1.1",
-      "URI" => "/",
-      "PATTERN" => "/",
-      'x-mongrel2-upload-done' => 'tmp/upload.file'
-    }
-    body = double('body')
     connection = double("connection")
     connection.stub(:chroot).and_return('.')
     io = double('io')
     File.should_receive(:open).with('./tmp/upload.file').and_return(io)
-    r = Mongrel2::Request.new(uuid, conn_id, path, headers, body, connection)
+    r = Mongrel2::Request.parse(message, connection)
     r.body.should eql(io)
   end
 end
