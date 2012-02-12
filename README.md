@@ -29,33 +29,33 @@ Run Mongrel2.
 Run a simple sinatra example,
 
     cd sinatra
-    export RACK_MONGREL2_SEND=tcp://127.0.0.1:9996
-    export RACK_MONGREL2_RECV=tcp://127.0.0.1:9997
-    export RACK_MONGREL2_UUID=9539ED88-1B33-4D19-A9F9-283E5BF11AC7
-    rackup -s mongrel2
+    rackup -s Mongrel2 \
+     	   -O uuid=9539ED88-1B33-4D19-A9F9-283E5BF11AC7 \
+     	   -O send=tcp://127.0.0.1:9996 \
+     	   -O recv=tcp://127.0.0.1:9997
 
-run an async sinatra example or
+an async sinatra example or
 
     cd async_sinatra
-    export RACK_MONGREL2_SEND=tcp://127.0.0.1:9998
-    export RACK_MONGREL2_RECV=tcp://127.0.0.1:9999
-    export RACK_MONGREL2_UUID=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F
-    rackup -s mongrel2
+    rackup -s Mongrel2 \
+     	   -O uuid=AEE66029-E420-42E7-A7C8-6C37BBFC7B9F \
+     	   -O send=tcp://127.0.0.1:9998 \
+     	   -O recv=tcp://127.0.0.1:9999
 
-run an big-upload example
+a big-upload example.
 
     cd upload
-    export RACK_MONGREL2_CHROOT=..
-    export RACK_MONGREL2_SEND=tcp://127.0.0.1:10000
-    export RACK_MONGREL2_RECV=tcp://127.0.0.1:10001
-    export RACK_MONGREL2_UUID=51226E47-AE49-4BC8-A9C6-BD7F6827E8A4
-    rackup -s mongrel2
+    rackup -s Mongrel2 \
+     	   -O uuid=51226E47-AE49-4BC8-A9C6-BD7F6827E8A4 \
+     	   -O send=tcp://127.0.0.1:10000 \
+     	   -O recv=tcp://127.0.0.1:10001 \
+     	   -O chroot=..
 
 ## How to use in your projects
 
 1. Get mongrel2 installed (http://mongrel2.org/wiki/quick_start.html)
 1. Get your config for mongrel2 setup (see example directory)
-1. Add it to your Gemfile (gem 'em-rack-mongrel2', '~> 0.1.0')
+1. Add it to your Gemfile (gem 'em-rack-mongrel2')
 1. You also need some sort of JSON parsing library installed, like Yajl or JSON (gem i yajl-ruby or gem i json). json-jruby will work too
 1. Run Mongrel2
 1. Run your rack application

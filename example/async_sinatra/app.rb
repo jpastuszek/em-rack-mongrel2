@@ -5,8 +5,8 @@ require 'yajl/json_gem'
 class AsyncExample < Sinatra::Base
   register Sinatra::Async
 
-  aget '*' do
-    EM.add_timer(5) do
+  aget '/' do
+    EM.add_timer(1) do
       body request.env.to_json
     end
   end
