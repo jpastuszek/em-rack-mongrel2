@@ -1,6 +1,6 @@
-require 'mongrel2/connection'
-require 'stringio'
-require 'eventmachine'
+$LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+
+require 'mongrel2'
 
 module Rack
   module Handler

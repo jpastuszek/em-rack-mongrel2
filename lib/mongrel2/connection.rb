@@ -1,7 +1,3 @@
-require 'em-zeromq'
-require 'mongrel2/request'
-require 'mongrel2/response'
-
 module Mongrel2
   class Connection
     attr_reader :chroot

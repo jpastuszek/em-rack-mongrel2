@@ -1,7 +1,3 @@
-require 'mongrel2'
-require 'rack'
-require 'eventmachine'
-
 module Mongrel2
   class Request
     attr_reader :headers, :body, :uuid, :conn_id, :path, :connection

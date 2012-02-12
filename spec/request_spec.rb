@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require 'mongrel2/request'
 
 describe Mongrel2::Request do
   it "should parse a Mongrel2 message" do

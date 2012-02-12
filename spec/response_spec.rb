@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require 'mongrel2/response'
 
 describe Mongrel2::Response do
   before(:each) do
