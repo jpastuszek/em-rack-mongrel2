@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'em-rack-mongrel2'
-  s.version           = '0.1.0'
-  s.date              = '2012-01-13'
+  s.version           = '0.2.0'
+  s.date              = '2012-02-12'
   s.rubyforge_project = 'em-rack-mongrel2'
 
   ## Make sure your summary is short. The description may be as long
@@ -68,6 +68,8 @@ Gem::Specification.new do |s|
     example/sinatra/.gitignore
     example/sinatra/app.rb
     example/sinatra/config.ru
+    example/upload/app.rb
+    example/upload/config.ru
     lib/mongrel2.rb
     lib/mongrel2/connection.rb
     lib/mongrel2/request.rb
