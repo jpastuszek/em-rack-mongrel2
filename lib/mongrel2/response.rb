@@ -47,8 +47,12 @@ module Mongrel2
       @resp = resp
     end
 
-    def send_http(req, body, status, headers)
-      send_resp(req.uuid, req.conn_id, build_http_response(body, status, headers))
+    def send_http_header(req, status, headers)
+      send_resp(req.uuid, req.conn_id, build_http_header(status, headers))
+    end
+
+    def send_http_data(req, data)
+      send_resp(req.uuid, req.conn_id, data)
     end
 
     def close(req)
@@ -61,10 +65,9 @@ module Mongrel2
       @resp.send_msg('%s %d:%s, %s' % [uuid, conn_id.size, conn_id, data])
     end
 
-    def build_http_response(body, status, headers)
-      headers['Content-Length'] = body.size.to_s
+    def build_http_header(status, headers)
       headers = headers.map{ |k, v| '%s: %s' % [k,v] }.join("\r\n")
-      "HTTP/1.1 #{status} #{StatusMessage[status.to_i]}\r\n#{headers}\r\n\r\n#{body}"
+      "HTTP/1.1 #{status} #{StatusMessage[status.to_i]}\r\n#{headers}\r\n\r\n"
     end
   end
 end

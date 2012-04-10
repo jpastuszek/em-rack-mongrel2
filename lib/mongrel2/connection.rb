@@ -52,15 +52,24 @@ module Mongrel2
       # Status code -1 indicates that we're going to respond later (async).
       return if -1 == status
 
-      body = ''
-      rack_response.each { |b| body << b }
-      reply req, body, status, headers
-    end
-
-    def reply(req, body, status = 200, headers = {})
       resp = Response.new(@resp)
-      resp.send_http req, body, status, headers
-      resp.close req if req.close?
+
+      begin
+        resp.send_http_header req, status, headers
+
+        rack_response.each do |b|
+          resp.send_http_data req, b
+        end
+      ensure
+        if rack_response.respond_to? :callback
+          rack_response.callback do
+            resp.close(req)
+          end 
+        else
+          resp.close(req)
+          rack_response.close if rack_response.respond_to? :close
+        end
+      end
     end
 
     def close
